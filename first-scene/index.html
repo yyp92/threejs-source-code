@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- 用 type="importmap" 的 script 来声明 es module 的包名和 url 之间的映射。 -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.174.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.174.0/examples/jsm/"
+            }   
+        }
+    </script>
+
+        
+    <!-- <script type="module">
+        import * as THREE from "three";
+
+        console.log(THREE);
+    </script> -->
+
+    <script type="module" src="./index.js"></script>
+</body>
+</html>
