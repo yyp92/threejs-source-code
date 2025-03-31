@@ -37,7 +37,7 @@ export function updatePosition() {
         positions.setZ(i, z + sinNum);
     }
 
-    // 要设置 positions.needUpdate 为 true，告诉 GPU 顶点变了，需要重新渲染，不然默认不会更新顶点
+    // * 要设置 positions.needUpdate 为 true，告诉 GPU 顶点变了，需要重新渲染，不然默认不会更新顶点
     positions.needsUpdate = true;
 }
 
