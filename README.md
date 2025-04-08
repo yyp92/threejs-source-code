@@ -109,3 +109,25 @@ Mesh 如果添加到 Group 中，那它的 position 就是相对于 Group 的，
 遍历这颗对象树，用 traverse 的 API，还可以通过 isMesh、isPoints 等来区分具体的类型，或者通过 getObjectByName、getObjectById 来查找特定对象。
 
 复杂的场景基本都是一个很大的对象树，后面会经常需要遍历 scene、查找某个具体的对象。
+
+
+
+
+## 各种灯光和常用 Helper
+常用的灯光 Light：
+- DirectionalLight：平行光，光线都是平行的，一般用来实现太阳光
+- PointLight：点光源，从一个点发散的光源，类似灯泡
+- AmbientLight：环境光，均匀照射所有物体的光源，用来调亮整个场景
+- SpotLight：聚光灯，比较聚拢的光源，类似手电筒的效果，可以设置 angle 和 distance
+- HemisphereLight：半球光，天空到地面两种颜色的灯光
+- RectAreaLight：矩形平面光，从一个矩形平面发出的光，比如灯管、窗户透过的光
+
+我们结合 dat.gui 来可视化调节了下这些 Light 的参数，并且用各自的 Helper 来可视化展示了光源的位置，光线传播方向。
+
+这节我们过了剩下的两种灯光还有一些 Helper：
+- GridHelper：坐标格辅助对象，可以用来标识地面
+- CameraHelper：相机辅助对象，用来可视化视椎体
+- ArrowHelper：箭头辅助对象，画个箭头来标识方向
+- PolarGridHelper：极坐标格辅助对象，用来标识角度
+
+当然，Helper 还有一些，那些需要一些前置知识，比如骨骼动画的 Helper
