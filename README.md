@@ -79,3 +79,21 @@ ExtrudeGeometry 可以通过 Shape 拉伸形成几何体。
 这算是一个比较综合的小实战，用到了 alphaMap + HSL + uv 动画。
 
 
+
+
+## 实战：盖房子
+这节我们给房子贴上了纹理贴图、加上了草地、设置了天空和雾，又做了相机动画。
+
+纹理贴图要注意的是 ExtrudeGeometry 这种生成的几何体，uv 坐标会很大，要设置 texture.repeat 为很小的值，比如 0.0005 这种，原则就是和 uv 坐标相乘等于 1
+
+草地用的 PlaneGeometry，天空是直接用 renderer.setClearColor，雾是设置在 scene.fog 的，可以用 dat.gui 可视化调试。
+
+相机动画这次我们做了圆周运动，确定一个半径，然后用 sin、cos 求 x、z 坐标就可以了，y 坐标固定，这样就是一个旋转的相机动画。
+
+这个盖房子的实战，我们练习了很多东西：
+- 曲线和生成几何体
+- 纹理贴图
+- 相机动画
+- dat.gui 可视化调试
+
+还处理了模型闪烁也就是深度冲突问题，可以让物体有一点微小的偏移，也可以开启 renderer 的 logarithmicDepthBuffer 深度缓冲区选项。
