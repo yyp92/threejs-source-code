@@ -97,3 +97,15 @@ ExtrudeGeometry 可以通过 Shape 拉伸形成几何体。
 - dat.gui 可视化调试
 
 还处理了模型闪烁也就是深度冲突问题，可以让物体有一点微小的偏移，也可以开启 renderer 的 logarithmicDepthBuffer 深度缓冲区选项。
+
+
+
+
+## 场景遍历和世界坐标
+Scene 中保存的是一个对象树，包含 Mesh、Group、Light 等各种对象。
+
+Mesh 如果添加到 Group 中，那它的 position 就是相对于 Group 的，叫做局部坐标，而它相对于坐标原点的，叫做世界坐标，可以通过 obj.getWorldPosition 来拿到。
+
+遍历这颗对象树，用 traverse 的 API，还可以通过 isMesh、isPoints 等来区分具体的类型，或者通过 getObjectByName、getObjectById 来查找特定对象。
+
+复杂的场景基本都是一个很大的对象树，后面会经常需要遍历 scene、查找某个具体的对象。
