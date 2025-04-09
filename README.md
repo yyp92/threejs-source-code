@@ -151,3 +151,18 @@ geomety.attributes.positon 记录了顶点坐标，而 geometry.attributes.norma
 各种材质对光线的反射都是基于法线算出来的，法线是一个需要掌握的底层概念。
 
 
+
+
+## 自定义顶点颜色实现渐变
+geometry.attributes.color 自定义顶点颜色。
+
+它需要在材质开启 vertexColors 选项才会生效。
+
+我们通过 geometry.attributes.position 定义顶点位置后，可以通过 geometry.attributes.color 来定义和他一一对应的颜色，这样顶点之间的线、三角形都会用渐变色填充。
+
+曲线的渐变色要计算很多个点的颜色，这种可以用 color.lerp 方法，确定起始点、结束点颜色之后，根据百分比计算某个位置的颜色。
+
+当你想实现渐变色的时候，就可以用自定义顶点颜色的方式来实现。
+
+
+
