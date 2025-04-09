@@ -3,6 +3,12 @@
 
 
 
+## 资料
+[案例模型的仓库](https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0#showcase)
+
+
+
+
 ## uv 坐标和 uv 动画
 纹理贴图如何映射到网格模型上是通过 uv 坐标决定的，也就是 geometry.attributes.uv，它和顶点一一对应。
 
@@ -193,3 +199,14 @@ scene 属性就是一个 Group，我们把它加到 Scene 里就可以了，它�
 绝大多数 3D 场景都是要加载外部的网格模型的，不可能全部自己画，而模型文件格式里最常用的就是 gltf，后面的实战我们基本都会用到 gltf 模型。
 
 
+
+
+## GLTF 的三种文件结构
+这节我们学习了 .gltf 模型的三种形式：
+- .gltf：所有纹理图片、顶点信息都是 base64 内联在一个文件里
+- .gltf + .bin + .jpg/.png：图片单独存在文件，顶点信息放在 .bin
+- .glb：也是内联所有资源，但是二进制形式体积更小
+
+后两种是用的最多的。
+
+不管存储结构如何，GLTFLoader 加载进来之后都是一样的网格模型，没有区别。
