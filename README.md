@@ -244,3 +244,17 @@ scene 属性就是一个 Group，我们把它加到 Scene 里就可以了，它�
 这样就会从相机的位置到你点击位置对应的三维空间的位置生成一条射线，射线穿过的物体就是被点击的。
 
 这就是点击选中三维场景的物体的原理。
+
+
+
+
+## 后期处理与描边发光效果
+这节我们学了后期处理，它可以通过一系列 Pass 添加后期效果，比如发光、描边等。
+
+创建 EffectComposer 对象，调用 addPass 方法添加了 3 个 Pass：
+
+RenderPass 渲染场景，OutlinePass 描边，UnrealBloomPass 发光
+
+注意要把渲染循环里的 renderer.render 换成 composor.render
+
+后期处理的 Pass 还有很多，下节我们来学下其他的。
