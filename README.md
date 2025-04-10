@@ -258,3 +258,20 @@ RenderPass 渲染场景，OutlinePass 描边，UnrealBloomPass 发光
 注意要把渲染循环里的 renderer.render 换成 composor.render
 
 后期处理的 Pass 还有很多，下节我们来学下其他的。
+
+
+
+
+## 各种后期处理效果
+这节我们用了一下常用的各种后处理通道（不是全部，后面用到再讲别的）。
+- RenderPass： 和 renderer.render 一样
+- GlitchPass： 故障闪屏效果
+- AfterimagePass：运动残影效果
+- FilmPass：电影雪花效果，可设置灰度
+- UnrealBloomPass：发光效果
+- HalftonePass：三色圆点效果
+- OutlinePass：描边效果
+- SMAAPass：抗锯齿
+- 伽马校正：用了后期通道后颜色异常的修复
+
+这些是常用的后期通道 Pass，在特定场景下，使用后期通道可以达到更好的效果。
