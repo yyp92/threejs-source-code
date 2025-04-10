@@ -303,3 +303,19 @@ RenderPass 渲染场景，OutlinePass 描边，UnrealBloomPass 发光
 之后又加上了相机的圆周动画，根据角度的 cos、sin 计算相机位置的 x、z，高度 y 保持不变。
 
 这个实战里自定义顶点坐标、自定义顶点颜色都用到了，这些原理性的东西还是很重要的。
+
+
+
+
+## 几何体材质共用和 clone、copy
+`copy 是把传入的对象的值复制给当前对象，而 clone 是创建一个新的对象。`
+
+这节我们探讨了下 mesh 的 geometry 和 material 共用的问题。
+
+它有的时候很方便，比如可以批量修改这些 mesh 的材质颜色，可以设置 visible 批量隐藏。
+
+但有的时候会有相互影响的问题，这时候 clone 一份新的 geometry 或者 material 就好了。
+
+此外，当你想复制值的时候，可以直接用 copy 方法，比如 rotation.copy、position.copy，它会复制目标对象的值到当前对象。
+
+材质共用问题是非常常见的问题，clone、copy 也是很常用的方法，后面会大量用到。
