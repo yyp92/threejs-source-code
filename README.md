@@ -5,6 +5,7 @@
 
 ## 资料
 [案例模型的仓库](https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0#showcase)
+[tween.js 叫补间动画库](https://www.npmjs.com/package/@tweenjs/tween.js)
 
 
 
@@ -319,3 +320,17 @@ RenderPass 渲染场景，OutlinePass 描边，UnrealBloomPass 发光
 此外，当你想复制值的时候，可以直接用 copy 方法，比如 rotation.copy、position.copy，它会复制目标对象的值到当前对象。
 
 材质共用问题是非常常见的问题，clone、copy 也是很常用的方法，后面会大量用到。
+
+
+
+
+## 补间动画库 Tween.js
+这节我们学了补间动画库 tween.js
+
+它只要指定开始数值、结束数值、动画时间、缓动效果，就可以实现动画。
+
+只要每一帧渲染的时候调用 update 传入当前时间就好了。
+
+缓动动画是开始有段加速、结束的时候有段减速，类似这种有缓冲过程的动画，会看起来比较自然。
+
+前面写动画效果都是自己改变数值的，以后我们都会用 tween.js 来改变数值。
