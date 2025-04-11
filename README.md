@@ -334,3 +334,21 @@ RenderPass 渲染场景，OutlinePass 描边，UnrealBloomPass 发光
 缓动动画是开始有段加速、结束的时候有段减速，类似这种有缓冲过程的动画，会看起来比较自然。
 
 前面写动画效果都是自己改变数值的，以后我们都会用 tween.js 来改变数值。
+
+
+
+
+## 关键帧动画和模型动画播放
+这节我们学了 Three.js 的关键帧动画。
+
+它和 css 的关键帧动画一样，定义一些属性变化的关键帧 KeyframeTrack，每个属性都有 times、values 的变化数组。
+
+然后定义这个关键帧动画 AnimationClip 的名字、持续时间等。
+
+最后用 AnimationMixer 播放就好了，可以 play、paused、也可以控制 timeScale 播放速率。
+
+gltf 模型上自带的 animations 关键帧动画，同样是用 AnimationMixer 来播放。
+
+关键帧动画用的还是很多的，后面用的 gltf 模型的动画都是关键帧动画。
+
+
