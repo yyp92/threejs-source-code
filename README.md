@@ -6,6 +6,7 @@
 ## 资料
 [案例模型的仓库](https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0#showcase)
 [tween.js 叫补间动画库](https://www.npmjs.com/package/@tweenjs/tween.js)
+[网上搜一下全景图，然后用这个工具来切割成天空盒](https://jaxry.github.io/panorama-to-cubemap/)
 
 
 
@@ -463,3 +464,12 @@ CSS3DRenderer 和 CSS2DRenderer 都是非常常用的给 3D 场景添加标注�
 
 这个实战我们综合用到了聚光灯、阴影、gltf 模型加载、后期处理、射线和点击、css2d 标注、tweenjs 相机缓动动画、音频播放等基础知识，是一个比较综合的实战。
 
+
+
+
+## PBR 材质：逼真的金属、塑料、磨砂效果
+这节我们学了 PBR 材质，它是基于物理渲染的材质，会做更多的计算，实现非常逼真的效果。
+
+PBR 材质是 MeshStandardMaterial 标准网格材质，通过设置 roughness 粗糙度、metalness 金属度、envMap 环境贴图，可以实现逼真的金属、塑料、磨砂等材质效果。
+
+此外，PBR 材质还可以实现玻璃、喷漆等效果，下节我们继续学习 PBR。
