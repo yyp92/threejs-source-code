@@ -473,3 +473,16 @@ CSS3DRenderer 和 CSS2DRenderer 都是非常常用的给 3D 场景添加标注�
 PBR 材质是 MeshStandardMaterial 标准网格材质，通过设置 roughness 粗糙度、metalness 金属度、envMap 环境贴图，可以实现逼真的金属、塑料、磨砂等材质效果。
 
 此外，PBR 材质还可以实现玻璃、喷漆等效果，下节我们继续学习 PBR。
+
+
+
+
+## PBR 材质：逼真的喷漆、玻璃效果
+这节我们学了另一个 PBR 材质，扩展自标准网格材质 MeshStandardMaterial 的物理网格材质 MeshPysicalMaterial。
+
+它除了可以调节金属度 metalness、粗糙度 roughness 外，还可以调节清漆度 clearcoat 和清漆层粗糙度 clearcoatRoughness 实现喷漆效果，就是车身的那种感觉，可以调节 transmission 透光度和折射率 ior 实现玻璃效果。
+
+玻璃、宝石、喷漆等效果都可以通过 PBR 材质调出来。
+
+下节我们来加载一个汽车模型，看下 PBR 材质可以做的多逼真。
+
