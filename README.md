@@ -411,3 +411,13 @@ gltf 模型上自带的 animations 关键帧动画，同样是用 AnimationMixer
 
 3D 场景的标注在开发的过程中用的很多，后面会经常用到。
 
+
+
+
+## CSS3DRenderer 实现标注：公告栏内容
+这节我们学了 CSS3DRenderer，它也是用 dom 给 3D 场景的物体加标注，但它是用 css3 的 3d 样式来写的，可以随场景一起旋转、放缩，有 3D 的感觉。
+
+除了用来标注外，也可以做电视内容、公告栏内容等，在这些位置渲染网页。
+
+CSS3DRenderer 和 CSS2DRenderer 都是非常常用的给 3D 场景添加标注的方式。
+
