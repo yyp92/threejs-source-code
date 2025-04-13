@@ -421,3 +421,18 @@ gltf 模型上自带的 animations 关键帧动画，同样是用 AnimationMixer
 
 CSS3DRenderer 和 CSS2DRenderer 都是非常常用的给 3D 场景添加标注的方式。
 
+
+
+
+## Sprite 结合 canvas 实现各种形状的标注
+这节我们学了 canvas 结合 Sprite 来做标注。
+
+它和 CSS2DRenderer 类似，都是永远正对相机，只不过它不能渲染 dom。
+
+但 Sprite 可以随 3D 物体放缩，CSS2DRenderer 不可以。
+
+它做标注一般是结合 canvas 来用，canvas 画出各种内容，然后用 CanvasTexture 作为 Sprite 的纹理，这样可以画出各种标注图案。
+
+做标注的三种方案，在特定场景下都有各自的应用，根据需求灵活选用。
+
+
