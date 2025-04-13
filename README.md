@@ -436,3 +436,16 @@ CSS3DRenderer 和 CSS2DRenderer 都是非常常用的给 3D 场景添加标注�
 做标注的三种方案，在特定场景下都有各自的应用，根据需求灵活选用。
 
 
+
+
+## 3D 场景如何加入音频
+这节我们学了 Three.js 如何播放音频。
+
+主要是通过 AudioLoader 加载音频，之后用 Audio 来播放，通过 setBuffer 设置音频数据。
+
+通过 volume、playbackRate、offset、detune 等来调节音频效果。
+
+后面需要用到音频的地方，都可以通过 Audio 来实现。
+
+
+
