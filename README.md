@@ -513,3 +513,14 @@ PBR 材质是 MeshStandardMaterial 标准网格材质，通过设置 roughness �
 后面用到的模型的搜索、编辑都是这个流程。
 
 
+
+
+## PBR 材质：逼真的毛绒、虹彩效果
+这节我们学了 PBR 材质的毛绒和虹彩效果。
+
+毛绒就是给物体加了一个光泽层 sheen，可以调节这个光泽层的粗糙度 sheenRoughness，光泽层的颜色 sheenColor，还可以设置光泽层颜色贴图 sheenColorMap
+
+虹彩则是给物体加了一个虹彩层 iridescence，可以调节虹彩层折射率 iridescenceIOR，反射率 reflectivity
+
+当然，大家知道 PBR 材质可以做啥效果就行，具体的参数可以用 GUI 可视化的调试。
+

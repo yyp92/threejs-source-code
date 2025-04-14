@@ -5,7 +5,9 @@ import {
 } from 'three/addons/controls/OrbitControls.js';
 // import mesh, {textureCube} from './mesh.js';
 // import mesh, {textureCube} from './mesh2.js';
-import mesh, {textureCube} from './mesh3.js';
+// import mesh, {textureCube} from './mesh3.js';
+// import mesh from './mesh4.js';
+import mesh, {textureCube} from './mesh5.js';
 
 const scene = new THREE.Scene();
 scene.background = textureCube
