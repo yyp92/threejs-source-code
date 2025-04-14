@@ -7,7 +7,7 @@
 [案例模型的仓库](https://github.com/KhronosGroup/glTF-Sample-Models/tree/main/2.0#showcase)
 [tween.js 叫补间动画库](https://www.npmjs.com/package/@tweenjs/tween.js)
 [网上搜一下全景图，然后用这个工具来切割成天空盒](https://jaxry.github.io/panorama-to-cubemap/)
-
+[模型](https://sketchfab.com/)
 
 
 
