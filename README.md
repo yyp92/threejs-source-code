@@ -486,3 +486,12 @@ PBR 材质是 MeshStandardMaterial 标准网格材质，通过设置 roughness �
 
 下节我们来加载一个汽车模型，看下 PBR 材质可以做的多逼真。
 
+
+
+
+## PBR 实战：汽车选配
+这节我们练习了下 PBR 材质。
+
+加载了车的模型，然后遍历找到车窗、车身的 mesh，修改 PBR 材质的金属度 metalness、粗糙度 roughness、清漆层 clearcoat、透光率 transmission、折射率 ior 等，就可以实现真实的车窗、车身的效果。
+
+然后加上了 GUI 来可视化的调试，大家自己调一下看看效果，就能更好的理解 PBR 材质了。
