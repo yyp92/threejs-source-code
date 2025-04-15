@@ -538,3 +538,15 @@ CubeCamera 拍摄的照片存在 WebGLCubeRenderTarget 上，size 一般是 2 �
 
 这样就能实现镜子的效果，实时映射出周围的物体。
 
+
+
+
+## Reflector 实现镜子效果
+这节我们分别用 CubeCamera 和 Reflector 实现了相对的两个镜子的效果。
+
+CubeCamera 拍的 6 张照片作为 envMap 可以实现镜面效果，但它并不能照出对面镜子的环境贴图，所以对面镜子是原本的颜色。
+
+Reflector 是专门用来做镜面效果的，它可以实现两个镜子的相互反射，比较逼真。
+
+所以，如果是设置 envMap，可以用 CubeCamera 来拍，比如汽车车身、车窗反射的光线。但如果是专门实现镜子，还是用 Reflector 来做更好。
+
