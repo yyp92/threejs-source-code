@@ -524,3 +524,17 @@ PBR 材质是 MeshStandardMaterial 标准网格材质，通过设置 roughness �
 
 当然，大家知道 PBR 材质可以做啥效果就行，具体的参数可以用 GUI 可视化的调试。
 
+
+
+
+## CubeCamera 实现镜子效果
+这节我们实现了镜子的效果。
+
+不能用 CubeTextureLoader 加载的图片作为环境贴图 envMap 了，而是要用 CubeCamera 来在物体的位置实时拍摄 6 张图。
+
+CubeCamera 拍摄的照片存在 WebGLCubeRenderTarget 上，size 一般是 2 的多少次方，比如 64、128、256、512 等。
+
+并且每帧调用下 cubeCamera.update 来重新拍摄照片。
+
+这样就能实现镜子的效果，实时映射出周围的物体。
+
