@@ -566,3 +566,19 @@ Reflector 是专门用来做镜面效果的，它可以实现两个镜子的相�
 
 这样，一个综合的小实战就完成了。以后用到镜子都可以用 Reflector 来做。
 
+
+
+
+## Vue、React 项目如何集成 Three.js
+这节我们实现了 react 和 three.js 的集成。
+
+three.js 的 renderer 渲染出 canvas 元素，把它挂载到 react 应用的某个 dom 下就好了。
+
+three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互不影响。
+
+互相调用的话就是通过参数返回值传递一些函数，在这些函数里实现调用的功能就好了。
+
+我们只测试了 Three.js 和 React 项目的集成，但 Vue 项目也是同一个思路，没啥区别。
+
+后面的项目如果需要写页面的部分，就可以用 Three.js 和前端框架集成来搞。
+
