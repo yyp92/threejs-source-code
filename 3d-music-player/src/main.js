@@ -3,7 +3,9 @@ import * as THREE from 'three';
 import {
     OrbitControls
 } from 'three/addons/controls/OrbitControls.js';
+import _ from 'lodash-es';
 import player from './player';
+import analyser from './analyser'
 
 const listener = new THREE.AudioListener();
 const audio = new THREE.Audio(listener);
@@ -16,7 +18,11 @@ loader.load('./superman.mp3', function (buffer) {
 
 
 const scene = new THREE.Scene();
+scene.add(analyser)
 scene.add(player);
+player.position.x = 1000;
+player.position.z = 600;
+
 
 const directionLight = new THREE.DirectionalLight(0xffffff, 2);
 directionLight.position.set(500, 400, 300);
@@ -29,10 +35,10 @@ const width = window.innerWidth;
 const height = window.innerHeight;
 
 const helper = new THREE.AxesHelper(500);
-scene.add(helper);
+// scene.add(helper);
 
 const camera = new THREE.PerspectiveCamera(60, width / height, 0.1, 10000);
-camera.position.set(500, 600, 800);
+camera.position.set(0, 800, 2200);
 camera.lookAt(0, 0, 0);
 
 const renderer = new THREE.WebGLRenderer({
@@ -41,7 +47,28 @@ const renderer = new THREE.WebGLRenderer({
 });
 renderer.setSize(width, height)
 
+
+const audioAnalyser = new THREE.AudioAnalyser(audio);
+function updateHeight() {
+    const frequencyData = audioAnalyser.getFrequencyData();
+
+    const sumArr = _.map(_.chunk(frequencyData, 50), (arr) => {
+        return _.sum(arr);
+    });
+
+    for (let i = 0; i< analyser.children.length; i++) {
+        const mesh = analyser.children[i];
+        const height = sumArr[i] / 4000;
+
+        // 这里因为旋转过，所以是修改 scale.z
+        mesh.scale.z = height;
+    }
+}
+
+
 function render() {
+    updateHeight();
+
     renderer.render(scene, camera);
     requestAnimationFrame(render);
 }
