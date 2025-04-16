@@ -65,6 +65,9 @@ scene.add(group);
 group.position.x = -1500;
 group.position.y = -500;
 
+// * 创建 AudioAnalyser，传入要分析的音频
+const analyser = new THREE.AudioAnalyser(audio);
+
 // 用 chunk 分组，然后 map 之后用 sum 求和
 function updateHeight() {
     const frequencyData = analyser.getFrequencyData();
@@ -99,9 +102,6 @@ function updateHeight() {
         box.geometry.attributes.color = new THREE.BufferAttribute(colors, 3);
     } 
 }
-
-// * 创建 AudioAnalyser，传入要分析的音频
-const analyser = new THREE.AudioAnalyser(audio);
 
 
 // 加一下性能分析的 Stats 工具
