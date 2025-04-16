@@ -582,3 +582,22 @@ three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互�
 
 后面的项目如果需要写页面的部分，就可以用 Three.js 和前端框架集成来搞。
 
+
+
+
+## Canvas 画各种图案作为纹理
+这节我们用 canvas 绘制了一些图案作为纹理。
+
+canvas 的画布大小一般设置为平面宽高 * dpr，这样绘制出来的不模糊。
+
+一般都是 translate 坐标原点到画布中央之后再绘制，这样是正好在画布中央，坐标也比较好计算。
+
+可以用 moveTo、lineTo 画直线，用 arc 画圆弧曲线，drawImage 画图片、fillText 写文字等。
+
+创建 CanvasTexture，传入 canvas 作为参数，然后设置为材质的颜色贴图 map，这样就可以用 canvas 做纹理了。
+
+还设置 transparent 为 true，这样就是背景透明的效果。
+
+很多时候找不到合适的图片或者纹理需要定制，都可以用 canvas 来绘制。
+
+
