@@ -2,8 +2,8 @@ import * as THREE from 'three';
 
 const group = new THREE.Group();
 
-const color1 = new THREE.Color('yellow');
-const color2 = new THREE.Color('blue');
+const color1 = new THREE.Color('blue');
+const color2 = new THREE.Color('red');
 
 for (let i = 1; i <= 21; i++) {
     // 用 Shape 画一个圆，然后定义 holes 的孔。
