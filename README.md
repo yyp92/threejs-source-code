@@ -663,3 +663,19 @@ canvas 的画布大小一般设置为平面宽高 * dpr，这样绘制出来的�
 首先用 canvas 绘制了音符的图案，然后用 Sprite 画了 100 个随机位置的音符，用噪声算法来计算随机连续的目标位置，之后用缓动动画来运动过去。
 
 加上跳动的音符之后，整体节奏感好多了。
+
+
+
+
+## OrbitControls 的常用属性方法
+这节我们过了一遍 OrbitControls 的常用属性方法。
+
+可以开启 autoRotate 自动旋转，可以加上惯性 enableDamping，可以开启 rotate、zoom、pan，也可以限制 rotate 的范围 maxPolarAngle
+
+我们经常监听 change 事件来可视化调节相机的位置和焦点，就是打印 camera.position 和 controls.target。
+
+但是要注意 ORbitControls 默认会把焦点调回 0,0,0，调好之后要同步设置 camera.lookAt 和 controls.target.set
+
+这些 OrbitControls 的属性方法都是经常会用到的。
+
+
