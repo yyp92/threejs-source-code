@@ -9,6 +9,8 @@
 [网上搜一下全景图，然后用这个工具来切割成天空盒](https://jaxry.github.io/panorama-to-cubemap/)
 [模型](https://sketchfab.com/)
 [光泽球纹理](https://observablehq.com/d/2c53c7ee9f619740?ui=classic)
+[gltf-pipeline](https://www.npmjs.com/package/gltf-pipeline)
+
 
 
 
@@ -690,6 +692,18 @@ canvas 的画布大小一般设置为平面宽高 * dpr，这样绘制出来的�
 换上不同的光泽球图片，就可以实现各种材质的光照效果。
 
 整体看起来还算真实，而且性能特别好。
+
+
+
+
+## gltf-pipeline：处理 gltf 模型的工具
+这节我们通过 gltf-pipeline 工具实现了 gltf 模型三种格式的互转。
+
+通过命令行做 glb 转 gltf 默认是生成内联格式，加一个 -s 就会把资源分出来。
+
+如果你有自定义的逻辑，也可以通过 node 脚本来调用。
+
+后面需要处理 gltf 模型的时候，都可以用 gltf-pipeline 这个包。
 
 
 
