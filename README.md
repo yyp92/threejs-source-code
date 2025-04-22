@@ -11,6 +11,7 @@
 [光泽球纹理](https://observablehq.com/d/2c53c7ee9f619740?ui=classic)
 [gltf-pipeline](https://www.npmjs.com/package/gltf-pipeline)
 [Draco 用于压缩和解压缩 3D 网格模型的一个库](https://github.com/google/draco)
+[tweenjs 的缓动效果](https://tweenjs.github.io/tween.js/examples/03_graphs.html)
 
 
 
@@ -339,6 +340,17 @@ RenderPass 渲染场景，OutlinePass 描边，UnrealBloomPass 发光
 缓动动画是开始有段加速、结束的时候有段减速，类似这种有缓冲过程的动画，会看起来比较自然。
 
 前面写动画效果都是自己改变数值的，以后我们都会用 tween.js 来改变数值。
+
+
+
+
+## Tween.js 常用 API
+这节我们过了一下 Tween.js 的常用特性。
+- 用 Group 可以管理多个 tween 动画，add 添加、remove 移除，然后渲染循环里统一 update
+- 多个动画串联可以用 chain，然后执行第一个动画的 start 就可以了
+- 缓动函数都有不同的曲线，可以从[这里查](https://tweenjs.github.io/tween.js/examples/03_graphs.html)
+
+后面我们做很多动画都会用到 tween.js，就会用到 Group、chain、各种缓动函数。
 
 
 
