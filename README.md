@@ -735,6 +735,31 @@ decoder 可以直接用 cdn 的，也可以把 three 的 libs 下的 decoder 复
 
 
 
+## 实战：3D 饼图
+这节我们把饼图画了出来。
+
+用 CurvePath 来组合曲线路径，用到了两个 LineCurve 和一个 EllipseCurve 来画形状，曲线取点构造 Shape，之后用 ExtrudeGeometry 拉伸成几何体。
+
+CurvePath 曲线连接的顺序很重要，要从一个点开始，最后回到原点，顺序不能错。
+
+难点在于角度的计算，需要根据当前值和 total 的比例计算角度，然后用 MathUtils.degToRad 转为弧度制，这样就确定了每个 part 的旋转角度和大小。
+
+形状画出来了，下节我们给它加上交互。
+
+
+
+
+## 实战：3D 饼图（二）
+这节我们给饼图加上了点击的交互，Sprite 标签，以及 tween.js 缓动动画。
+
+首先用 RayCaster 加上点击的处理，给点击的 part 修改 position，具体的 position 要根据角度的 cos、sin 来计算出来。
+
+之后加上了 canvas + Sprite 画的标签，这里要注意 dpr 的问题，Sprite 的高度为 50，那 canvas 的高度就是 50 * dpr，这样正好不模糊，字体大小也要乘以 2，比如 30px * 2 = 60px。
+
+这样，3D 饼图的实战就完成了，难点在于角度、cos、sin 的计算，以及 canvas 的尺寸设置。
+
+
+
 
 ## 酷家乐装修编辑器：需求分析
 这节我们分析了下酷家乐装修编辑器的流程。
