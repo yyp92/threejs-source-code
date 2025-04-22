@@ -10,6 +10,7 @@
 [模型](https://sketchfab.com/)
 [光泽球纹理](https://observablehq.com/d/2c53c7ee9f619740?ui=classic)
 [gltf-pipeline](https://www.npmjs.com/package/gltf-pipeline)
+[Draco 用于压缩和解压缩 3D 网格模型的一个库](https://github.com/google/draco)
 
 
 
@@ -704,6 +705,21 @@ canvas 的画布大小一般设置为平面宽高 * dpr，这样绘制出来的�
 如果你有自定义的逻辑，也可以通过 node 脚本来调用。
 
 后面需要处理 gltf 模型的时候，都可以用 gltf-pipeline 这个包。
+
+
+
+
+## Draco：压缩 gltf 模型，提升性能
+这节我们学了用 draco 来压缩模型，提高 gltf 模型加载性能。
+
+这个是 google 推出的一个工具，我们可以用 gltf-pipeline 来压缩模型，它集成了 draco，只要在转换模型的时候加一个 -d
+
+之后压缩过的模型在 threejs 里加载的时候，需要给 GLTFLoader 设置下 DRACOLoader 的实例，这个 dracoLoader 要指定从哪里下载 decoder
+
+decoder 可以直接用 cdn 的，也可以把 three 的 libs 下的 decoder 复制出来，设置好对应的 decoderPath 加载路径就行。
+
+这样，我们就可以下载压缩过的模型来提升 gltf 模型的加载速度了。
+
 
 
 
