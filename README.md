@@ -771,6 +771,20 @@ CurvePath 曲线连接的顺序很重要，要从一个点开始，最后回到�
 
 
 
+## HDR：亮度范围更广的全景图
+这节我们学了用 .hdr 文件作为全景图。
+
+hdr 文件能够存储范围更广的亮度信息，作为全景图更加真实。
+
+用 RGBELoader 加载之后，设置 mapping 为 EquirectangularReflectionMapping，然后作为 scene.background 就可以了。
+
+当然，普通的 jpg 文件也不用分割成 6 张图后再用 CubeTextureLoader 加载，也可以用这种方式运行时分割。
+
+后面做全景图的时候，尽量用 hdr 文件，会更加真实。
+
+
+
+
 ## 酷家乐装修编辑器：需求分析
 这节我们分析了下酷家乐装修编辑器的流程。
 
