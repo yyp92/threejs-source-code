@@ -12,6 +12,7 @@
 [gltf-pipeline](https://www.npmjs.com/package/gltf-pipeline)
 [Draco 用于压缩和解压缩 3D 网格模型的一个库](https://github.com/google/draco)
 [tweenjs 的缓动效果](https://tweenjs.github.io/tween.js/examples/03_graphs.html)
+[threejs 官方编辑器](https://threejs.org/editor/)
 
 
 
@@ -221,6 +222,33 @@ scene 属性就是一个 Group，我们把它加到 Scene 里就可以了，它�
 
 
 
+
+## gltf-pipeline：处理 gltf 模型的工具
+这节我们通过 gltf-pipeline 工具实现了 gltf 模型三种格式的互转。
+
+通过命令行做 glb 转 gltf 默认是生成内联格式，加一个 -s 就会把资源分出来。
+
+如果你有自定义的逻辑，也可以通过 node 脚本来调用。
+
+后面需要处理 gltf 模型的时候，都可以用 gltf-pipeline 这个包。
+
+
+
+
+## Draco：压缩 gltf 模型，提升性能
+这节我们学了用 draco 来压缩模型，提高 gltf 模型加载性能。
+
+这个是 google 推出的一个工具，我们可以用 gltf-pipeline 来压缩模型，它集成了 draco，只要在转换模型的时候加一个 -d
+
+之后压缩过的模型在 threejs 里加载的时候，需要给 GLTFLoader 设置下 DRACOLoader 的实例，这个 dracoLoader 要指定从哪里下载 decoder
+
+decoder 可以直接用 cdn 的，也可以把 three 的 libs 下的 decoder 复制出来，设置好对应的 decoderPath 加载路径就行。
+
+这样，我们就可以下载压缩过的模型来提升 gltf 模型的加载速度了。
+
+
+
+
 ## 正投影相机和三种灯光的阴影
 这节我们学了下正投影相机和阴影。
 
@@ -235,6 +263,20 @@ scene 属性就是一个 Group，我们把它加到 Scene 里就可以了，它�
 阴影相机的可视范围覆盖住要产生阴影的物体即可。
 
 为了增加 3D 场景的真实感，很多时候是需要渲染阴影的。
+
+
+
+
+## OrbitControls 的常用属性方法
+这节我们过了一遍 OrbitControls 的常用属性方法。
+
+可以开启 autoRotate 自动旋转，可以加上惯性 enableDamping，可以开启 rotate、zoom、pan，也可以限制 rotate 的范围 maxPolarAngle
+
+我们经常监听 change 事件来可视化调节相机的位置和焦点，就是打印 camera.position 和 controls.target。
+
+但是要注意 ORbitControls 默认会把焦点调回 0,0,0，调好之后要同步设置 camera.lookAt 和 controls.target.set
+
+这些 OrbitControls 的属性方法都是经常会用到的。
 
 
 
@@ -455,6 +497,60 @@ CSS3DRenderer 和 CSS2DRenderer 都是非常常用的给 3D 场景添加标注�
 
 
 
+## Canvas 画各种图案作为纹理
+这节我们用 canvas 绘制了一些图案作为纹理。
+
+canvas 的画布大小一般设置为平面宽高 * dpr，这样绘制出来的不模糊。
+
+一般都是 translate 坐标原点到画布中央之后再绘制，这样是正好在画布中央，坐标也比较好计算。
+
+可以用 moveTo、lineTo 画直线，用 arc 画圆弧曲线，drawImage 画图片、fillText 写文字等。
+
+创建 CanvasTexture，传入 canvas 作为参数，然后设置为材质的颜色贴图 map，这样就可以用 canvas 做纹理了。
+
+还设置 transparent 为 true，这样就是背景透明的效果。
+
+很多时候找不到合适的图片或者纹理需要定制，都可以用 canvas 来绘制。
+
+
+
+
+## 实战：3D 饼图
+这节我们把饼图画了出来。
+
+用 CurvePath 来组合曲线路径，用到了两个 LineCurve 和一个 EllipseCurve 来画形状，曲线取点构造 Shape，之后用 ExtrudeGeometry 拉伸成几何体。
+
+CurvePath 曲线连接的顺序很重要，要从一个点开始，最后回到原点，顺序不能错。
+
+难点在于角度的计算，需要根据当前值和 total 的比例计算角度，然后用 MathUtils.degToRad 转为弧度制，这样就确定了每个 part 的旋转角度和大小。
+
+形状画出来了，下节我们给它加上交互。
+
+
+
+
+## 实战：3D 饼图（二）
+这节我们给饼图加上了点击的交互，Sprite 标签，以及 tween.js 缓动动画。
+
+首先用 RayCaster 加上点击的处理，给点击的 part 修改 position，具体的 position 要根据角度的 cos、sin 来计算出来。
+
+之后加上了 canvas + Sprite 画的标签，这里要注意 dpr 的问题，Sprite 的高度为 50，那 canvas 的高度就是 50 * dpr，这样正好不模糊，字体大小也要乘以 2，比如 30px * 2 = 60px。
+
+这样，3D 饼图的实战就完成了，难点在于角度、cos、sin 的计算，以及 canvas 的尺寸设置。
+
+
+
+
+## 系统掌握噪声库 simplex-noise
+这节我们学了下噪声库 SimplexNoise 的更多用法。
+
+可以用噪声生成山脉地形，但是一重噪声生成的不够崎岖，可以加更多重噪声来增加崎岖度。
+
+可以用噪声生成随机的运动位置，比如萤火虫的运动，你还可以用 tween.js 加上缓动动画，但要做下节流处理。
+
+
+
+
 ## 3D 场景如何加入音频
 这节我们学了 Three.js 如何播放音频。
 
@@ -479,6 +575,20 @@ CSS3DRenderer 和 CSS2DRenderer 都是非常常用的给 3D 场景添加标注�
 然后用 CSS2DRenderer 的标注实现了对话功能。
 
 这个实战我们综合用到了聚光灯、阴影、gltf 模型加载、后期处理、射线和点击、css2d 标注、tweenjs 相机缓动动画、音频播放等基础知识，是一个比较综合的实战。
+
+
+
+
+## 音乐频谱可视化
+这节我们实现了音乐频谱可视化的效果。
+
+用 AudioAnalyser 拿到音频频谱数据，然后用 lodash 分组之后求和，最后得到一个 20 多个元素的数组，然后用 BoxGeometry 画立方体来可视化。
+
+每帧修改 box 的高度和 position.y 就好了。
+
+我们还通过自定义顶点颜色实现了根据高度来设置颜色的渐变色效果。
+
+后面用到音频频谱的分析，就可以用 AudioAnalyser 来做。
 
 
 
@@ -543,6 +653,32 @@ PBR 材质是 MeshStandardMaterial 标准网格材质，通过设置 roughness �
 
 
 
+## MatCap 材质：通过光照球实现伪光照效果
+这节我们学了 MeshMatcapMaterial 材质。
+
+它并不计算灯光，但可以通过提前渲染好的光泽球图片根据顶点法线来计算光照。
+
+换上不同的光泽球图片，就可以实现各种材质的光照效果。
+
+整体看起来还算真实，而且性能特别好。
+
+
+
+
+## HDR：亮度范围更广的全景图
+这节我们学了用 .hdr 文件作为全景图。
+
+hdr 文件能够存储范围更广的亮度信息，作为全景图更加真实。
+
+用 RGBELoader 加载之后，设置 mapping 为 EquirectangularReflectionMapping，然后作为 scene.background 就可以了。
+
+当然，普通的 jpg 文件也不用分割成 6 张图后再用 CubeTextureLoader 加载，也可以用这种方式运行时分割。
+
+后面做全景图的时候，尽量用 hdr 文件，会更加真实。
+
+
+
+
 ## CubeCamera 实现镜子效果
 这节我们实现了镜子的效果。
 
@@ -581,54 +717,6 @@ Reflector 是专门用来做镜面效果的，它可以实现两个镜子的相�
 最后添加了平行光的阴影。
 
 这样，一个综合的小实战就完成了。以后用到镜子都可以用 Reflector 来做。
-
-
-
-
-## Vue、React 项目如何集成 Three.js
-这节我们实现了 react 和 three.js 的集成。
-
-three.js 的 renderer 渲染出 canvas 元素，把它挂载到 react 应用的某个 dom 下就好了。
-
-three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互不影响。
-
-互相调用的话就是通过参数返回值传递一些函数，在这些函数里实现调用的功能就好了。
-
-我们只测试了 Three.js 和 React 项目的集成，但 Vue 项目也是同一个思路，没啥区别。
-
-后面的项目如果需要写页面的部分，就可以用 Three.js 和前端框架集成来搞。
-
-
-
-
-## Canvas 画各种图案作为纹理
-这节我们用 canvas 绘制了一些图案作为纹理。
-
-canvas 的画布大小一般设置为平面宽高 * dpr，这样绘制出来的不模糊。
-
-一般都是 translate 坐标原点到画布中央之后再绘制，这样是正好在画布中央，坐标也比较好计算。
-
-可以用 moveTo、lineTo 画直线，用 arc 画圆弧曲线，drawImage 画图片、fillText 写文字等。
-
-创建 CanvasTexture，传入 canvas 作为参数，然后设置为材质的颜色贴图 map，这样就可以用 canvas 做纹理了。
-
-还设置 transparent 为 true，这样就是背景透明的效果。
-
-很多时候找不到合适的图片或者纹理需要定制，都可以用 canvas 来绘制。
-
-
-
-
-## 音乐频谱可视化
-这节我们实现了音乐频谱可视化的效果。
-
-用 AudioAnalyser 拿到音频频谱数据，然后用 lodash 分组之后求和，最后得到一个 20 多个元素的数组，然后用 BoxGeometry 画立方体来可视化。
-
-每帧修改 box 的高度和 position.y 就好了。
-
-我们还通过自定义顶点颜色实现了根据高度来设置颜色的渐变色效果。
-
-后面用到音频频谱的分析，就可以用 AudioAnalyser 来做。
 
 
 
@@ -683,104 +771,36 @@ canvas 的画布大小一般设置为平面宽高 * dpr，这样绘制出来的�
 
 
 
-## OrbitControls 的常用属性方法
-这节我们过了一遍 OrbitControls 的常用属性方法。
+## Three.js 的各种控制器 Controls
+这节我们过了一遍各种控制器：
+- FlyControls：飞行控制器，通过上下左右键和鼠标来控制前进后退、方向旋转
+- FirstPersonControls：类似飞行控制器，但是上下角度不能超过 90 度
+- MapControls： 和 OrbitControls 一样，但是左键平移，右键旋转
+- TransformControls：用来移动场景中的物体
+- DragControls：用来拖动场景中的物体
 
-可以开启 autoRotate 自动旋转，可以加上惯性 enableDamping，可以开启 rotate、zoom、pan，也可以限制 rotate 的范围 maxPolarAngle
-
-我们经常监听 change 事件来可视化调节相机的位置和焦点，就是打印 camera.position 和 controls.target。
-
-但是要注意 ORbitControls 默认会把焦点调回 0,0,0，调好之后要同步设置 camera.lookAt 和 controls.target.set
-
-这些 OrbitControls 的属性方法都是经常会用到的。
-
-
-
-
-## MatCap 材质：通过光照球实现伪光照效果
-这节我们学了 MeshMatcapMaterial 材质。
-
-它并不计算灯光，但可以通过提前渲染好的光泽球图片根据顶点法线来计算光照。
-
-换上不同的光泽球图片，就可以实现各种材质的光照效果。
-
-整体看起来还算真实，而且性能特别好。
+不同场景下需要不同的交互方式，需要不同的控制器。
 
 
 
 
-## gltf-pipeline：处理 gltf 模型的工具
-这节我们通过 gltf-pipeline 工具实现了 gltf 模型三种格式的互转。
+## Vue、React 项目如何集成 Three.js
+这节我们实现了 react 和 three.js 的集成。
 
-通过命令行做 glb 转 gltf 默认是生成内联格式，加一个 -s 就会把资源分出来。
+three.js 的 renderer 渲染出 canvas 元素，把它挂载到 react 应用的某个 dom 下就好了。
 
-如果你有自定义的逻辑，也可以通过 node 脚本来调用。
+three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互不影响。
 
-后面需要处理 gltf 模型的时候，都可以用 gltf-pipeline 这个包。
+互相调用的话就是通过参数返回值传递一些函数，在这些函数里实现调用的功能就好了。
 
+我们只测试了 Three.js 和 React 项目的集成，但 Vue 项目也是同一个思路，没啥区别。
 
-
-
-## Draco：压缩 gltf 模型，提升性能
-这节我们学了用 draco 来压缩模型，提高 gltf 模型加载性能。
-
-这个是 google 推出的一个工具，我们可以用 gltf-pipeline 来压缩模型，它集成了 draco，只要在转换模型的时候加一个 -d
-
-之后压缩过的模型在 threejs 里加载的时候，需要给 GLTFLoader 设置下 DRACOLoader 的实例，这个 dracoLoader 要指定从哪里下载 decoder
-
-decoder 可以直接用 cdn 的，也可以把 three 的 libs 下的 decoder 复制出来，设置好对应的 decoderPath 加载路径就行。
-
-这样，我们就可以下载压缩过的模型来提升 gltf 模型的加载速度了。
+后面的项目如果需要写页面的部分，就可以用 Three.js 和前端框架集成来搞。
 
 
 
 
-## 实战：3D 饼图
-这节我们把饼图画了出来。
-
-用 CurvePath 来组合曲线路径，用到了两个 LineCurve 和一个 EllipseCurve 来画形状，曲线取点构造 Shape，之后用 ExtrudeGeometry 拉伸成几何体。
-
-CurvePath 曲线连接的顺序很重要，要从一个点开始，最后回到原点，顺序不能错。
-
-难点在于角度的计算，需要根据当前值和 total 的比例计算角度，然后用 MathUtils.degToRad 转为弧度制，这样就确定了每个 part 的旋转角度和大小。
-
-形状画出来了，下节我们给它加上交互。
-
-
-
-
-## 实战：3D 饼图（二）
-这节我们给饼图加上了点击的交互，Sprite 标签，以及 tween.js 缓动动画。
-
-首先用 RayCaster 加上点击的处理，给点击的 part 修改 position，具体的 position 要根据角度的 cos、sin 来计算出来。
-
-之后加上了 canvas + Sprite 画的标签，这里要注意 dpr 的问题，Sprite 的高度为 50，那 canvas 的高度就是 50 * dpr，这样正好不模糊，字体大小也要乘以 2，比如 30px * 2 = 60px。
-
-这样，3D 饼图的实战就完成了，难点在于角度、cos、sin 的计算，以及 canvas 的尺寸设置。
-
-
-
-
-## 系统掌握噪声库 simplex-noise
-这节我们学了下噪声库 SimplexNoise 的更多用法。
-
-可以用噪声生成山脉地形，但是一重噪声生成的不够崎岖，可以加更多重噪声来增加崎岖度。
-
-可以用噪声生成随机的运动位置，比如萤火虫的运动，你还可以用 tween.js 加上缓动动画，但要做下节流处理。
-
-
-
-
-## HDR：亮度范围更广的全景图
-这节我们学了用 .hdr 文件作为全景图。
-
-hdr 文件能够存储范围更广的亮度信息，作为全景图更加真实。
-
-用 RGBELoader 加载之后，设置 mapping 为 EquirectangularReflectionMapping，然后作为 scene.background 就可以了。
-
-当然，普通的 jpg 文件也不用分割成 6 张图后再用 CubeTextureLoader 加载，也可以用这种方式运行时分割。
-
-后面做全景图的时候，尽量用 hdr 文件，会更加真实。
+## 实战：Three.js Editor
 
 
 
