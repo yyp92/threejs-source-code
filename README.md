@@ -814,6 +814,18 @@ three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互�
 
 
 
+## 实战：Three.js Editor（三）
+这节我们完成了 Three.js 的初始化，在 dom 渲染完之后调用 Three.js 的 API 创建 Scene、Camera、Renderer，之后把 renderer.domElement 挂载到渲染出的 dom
+
+然后用 zustand 创建了全局 store 来管理所有 mesh，在 json 里维护。
+
+渲染 3d 场景的时候，传入 json，递归渲染 Mesh
+
+这样，编辑器的 Three.js 部分的初始化以及全局 store 的存储就完成了。
+
+
+
+
 ## 酷家乐装修编辑器：需求分析
 这节我们分析了下酷家乐装修编辑器的流程。
 

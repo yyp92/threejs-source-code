@@ -9,21 +9,21 @@ const scene = new THREE.Scene();
 
 
 // * hdr
-// const rgbeloader = new RGBELoader();
-// rgbeloader.load('./pic.hdr', function (texture) {
-//     //  mapping 是指定如何解析这张图片的
-//     texture.mapping = THREE.EquirectangularReflectionMapping;
-//     scene.background = texture;
-// });
-
-
-// * jpg
-const textureLoader = new THREE.TextureLoader();
-textureLoader.load('./pic.jpg', function (texture) {
+const rgbeloader = new RGBELoader();
+rgbeloader.load('./pic.hdr', function (texture) {
     //  mapping 是指定如何解析这张图片的
     texture.mapping = THREE.EquirectangularReflectionMapping;
     scene.background = texture;
 });
+
+
+// * jpg
+// const textureLoader = new THREE.TextureLoader();
+// textureLoader.load('./pic.jpg', function (texture) {
+//     //  mapping 是指定如何解析这张图片的
+//     texture.mapping = THREE.EquirectangularReflectionMapping;
+//     scene.background = texture;
+// });
 
 
 
