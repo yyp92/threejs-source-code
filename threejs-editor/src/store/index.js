@@ -70,8 +70,29 @@ const useThreeStore = create((set, get) => {
                 //         }
                 //     }
                 // }
-            ]
+            ],
         },
+
+        // 选中的物体
+        selectedObj: null,
+        setSelectedObj(obj) {
+            set({
+                selectedObj: obj
+            })
+        },
+
+        removeMesh(name) {
+            set(state => {
+                return {
+                    data: {
+                        ...state.data,
+                        meshArr: state.data.meshArr.filter(mesh => {
+                            return mesh.name !== name
+                        })
+                    }
+                }
+            })
+        },        
 
         // 往这个 mesh 数组里添加 Mesh
         addMesh(type) {

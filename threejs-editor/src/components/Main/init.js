@@ -9,7 +9,7 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { MeshTypes } from '../../store';
 
-export function init(dom, data) {
+export function init(dom, data, onSelected) {
     const scene = new THREE.Scene();
 
     const axesHelper = new THREE.AxesHelper(500);
@@ -72,7 +72,7 @@ export function init(dom, data) {
     // 设置闪烁周期是 1s
     outlinePass.pulsePeriod = 1;
     composer.addPass(outlinePass);
-    
+
     // 伽马校正
     const gammaPass= new ShaderPass(GammaCorrectionShader);
     composer.addPass(gammaPass);    
@@ -115,9 +115,11 @@ export function init(dom, data) {
         if (intersections.length) {
             const obj = intersections[0].object;
             outlinePass.selectedObjects = [obj];
+            onSelected(obj)
         }
         else {
             outlinePass.selectedObjects = [];
+            onSelected(null)
         }
     });
 

@@ -5,13 +5,23 @@ import { init } from "./init";
 
 
 function Main() {
-    const { data, addMesh } = useThreeStore();
+    const {
+        data,
+        addMesh,
+        selectedObj,
+        setSelectedObj,
+        removeMesh
+    } = useThreeStore();
     const sceneRef = useRef();
+
+    function onSelected(obj) {
+        setSelectedObj(obj)
+    }    
 
 
     useEffect(() => {
         const dom = document.getElementById('threejs-container');
-        const { scene } = init(dom, data);
+        const { scene } = init(dom, data, onSelected);
 
         sceneRef.current = scene;
 
@@ -51,6 +61,7 @@ function Main() {
                     color
                 });
                 const mesh = new THREE.Mesh(geometry, material);
+                mesh.name = item.name
 
                 scene.add(mesh);
             }
@@ -69,11 +80,31 @@ function Main() {
                     color
                 });
                 const mesh = new THREE.Mesh(geometry, material);
+                mesh.name = item.name
 
                 scene.add(mesh);
             }
         })
     }, [data]);
+
+    // 按下 delete 键的时候，如果有选中的物体，就要把它删除
+    useEffect(() => {
+        function handleKeydown(e) {
+            if (e.key === 'Backspace') {
+                if (selectedObj) {
+                    selectedObj?.parent.remove(selectedObj);
+                    setSelectedObj(null)
+                    removeMesh(selectedObj.name)
+                }
+            }
+        }
+
+        window.addEventListener('keydown', handleKeydown);
+
+        return () => {
+            window.removeEventListener('keydown', handleKeydown);
+        }
+    }, [selectedObj]);
     
 
     return <div
