@@ -1,5 +1,13 @@
+import { useThreeStore } from "../../store";
+
 function Properties() {
-    return <div className="Properties">Properties</div>
+    const { data } = useThreeStore();
+
+    return <div className="Properties">
+        <pre>
+            {JSON.stringify(data, null, 2)}
+        </pre>
+    </div>
 }
 
 export default Properties;

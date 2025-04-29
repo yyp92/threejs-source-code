@@ -2,6 +2,11 @@ import * as THREE from 'three';
 import {
     OrbitControls
 } from 'three/addons/controls/OrbitControls.js';
+import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
+import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
+import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
+import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
+import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { MeshTypes } from '../../store';
 
 export function init(dom, data) {
@@ -13,27 +18,27 @@ export function init(dom, data) {
     scene.add(gridHeper);
 
 
-    data.meshArr.forEach(item => {
-        if (item.type === MeshTypes.Box) {
-            const {
-                width,
-                height,
-                depth,
-                material: {
-                    color
-                }
-            } = item.props;
+    // data.meshArr.forEach(item => {
+    //     if (item.type === MeshTypes.Box) {
+    //         const {
+    //             width,
+    //             height,
+    //             depth,
+    //             material: {
+    //                 color
+    //             }
+    //         } = item.props;
 
-            const geometry = new THREE.BoxGeometry(width, height, depth);
-            const material = new THREE.MeshPhongMaterial({
-                color
-            });
+    //         const geometry = new THREE.BoxGeometry(width, height, depth);
+    //         const material = new THREE.MeshPhongMaterial({
+    //             color
+    //         });
 
-            const mesh = new THREE.Mesh(geometry, material);
-            scene.add(mesh);
-        } 
-    })
-    
+    //         const mesh = new THREE.Mesh(geometry, material);
+    //         scene.add(mesh);
+    //     } 
+    // })
+
 
 
 
@@ -57,8 +62,26 @@ export function init(dom, data) {
     renderer.setSize(width, height);
 
 
+    // * 后期处理
+    const composer = new EffectComposer(renderer);
+    const renderPass = new RenderPass(scene, camera);
+    composer.addPass(renderPass);
+
+    const v = new THREE.Vector2(window.innerWidth, window.innerWidth);
+    const outlinePass = new OutlinePass(v, scene, camera);
+    // 设置闪烁周期是 1s
+    outlinePass.pulsePeriod = 1;
+    composer.addPass(outlinePass);
+    
+    // 伽马校正
+    const gammaPass= new ShaderPass(GammaCorrectionShader);
+    composer.addPass(gammaPass);    
+
+
     function render(time) {
-        renderer.render(scene, camera);
+        // renderer.render(scene, camera);
+        composer.render();
+
         requestAnimationFrame(render);
     }
 
@@ -77,6 +100,27 @@ export function init(dom, data) {
     };
 
     const controls = new OrbitControls(camera, renderer.domElement);
+
+
+    // * 选中删除的功能
+    renderer.domElement.addEventListener('click', (e) => {
+        const y = -((e.offsetY / height) * 2 - 1);
+        const x = (e.offsetX / width) * 2 - 1;
+
+        const rayCaster = new THREE.Raycaster();
+        rayCaster.setFromCamera(new THREE.Vector2(x, y), camera);
+
+        const intersections = rayCaster.intersectObjects(scene.children);
+
+        if (intersections.length) {
+            const obj = intersections[0].object;
+            outlinePass.selectedObjects = [obj];
+        }
+        else {
+            outlinePass.selectedObjects = [];
+        }
+    });
+
 
     return {
         scene

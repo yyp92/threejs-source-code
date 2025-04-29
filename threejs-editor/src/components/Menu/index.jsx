@@ -1,4 +1,5 @@
 import { Menu as AntdMenu } from 'antd';
+import { useThreeStore } from '../../store';
 import './index.scss';
 
 
@@ -41,10 +42,12 @@ const items = [
 
 
 function Menu() {
+    const { addMesh } = useThreeStore();
+
     function handleClick(e) {
-        alert(e.key)
+        addMesh(e.key);
     }
-    
+
     return <div className="Menu">
         <AntdMenu
             mode="horizontal"
