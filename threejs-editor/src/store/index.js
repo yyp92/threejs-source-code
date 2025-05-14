@@ -18,6 +18,16 @@ function createBox() {
                 x: 0,
                 y: 0,
                 z: 0
+            },
+            scale: {
+                x: 1,
+                y: 1,
+                z: 1
+            },
+            rotation: {
+                x: 0,
+                y: 0,
+                z: 0
             }
         }
     }
@@ -38,6 +48,16 @@ function createCylinder() {
                 color: 'orange',
             },
             position: {
+                x: 0,
+                y: 0,
+                z: 0
+            },
+            scale: {
+                x: 1,
+                y: 1,
+                z: 1
+            },
+            rotation: {
                 x: 0,
                 y: 0,
                 z: 0
@@ -118,7 +138,7 @@ const useThreeStore = create((set, get) => {
             }
         },
 
-        updateMeshPosition(name, position) {
+        updateMeshInfo(name, info, type) {
             set(state => {
                 return {
                     data: {
@@ -126,7 +146,19 @@ const useThreeStore = create((set, get) => {
                         meshArr: state.data.meshArr.map(mesh => {
                             // 根据 name 查找目标 mesh，然后更新 props.position
                             if (mesh.name === name) {
-                                mesh.props.position = position;
+                                if (type === 'position') {
+                                    mesh.props.position = info;
+                                }
+                                else if (type === 'scale') {
+                                    mesh.props.scale = info;
+                                }
+                                else if (type === 'rotation') {
+                                    mesh.props.rotation = {
+                                        x: info.x,
+                                        y: info.y,
+                                        z: info.z
+                                    }
+                                }
                             }
 
                             return mesh;

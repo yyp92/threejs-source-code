@@ -16,7 +16,7 @@ export function init(
     dom,
     data,
     onSelected,
-    updateMeshPosition
+    updateMeshInfo
 ) {
     const scene = new THREE.Scene();
 
@@ -101,13 +101,21 @@ export function init(
     // dragging-changed 是拖动状态的变化，如果 OrbitControls 在拖动，那就禁用 TransformControls，否则就启用。
     transformControls.addEventListener('dragging-changed', function (event) {
         orbitControls.enabled = !event.value;
-    });    
+    });
 
     transformControls.addEventListener('change', () => {
         const obj = transformControls.object;
 
         if (obj) {
-            updateMeshPosition(obj.name, obj.position);
+            if (transformControls.mode === 'translate') {
+                updateMeshInfo(obj.name, obj.position, 'position');
+            }
+            else if (transformControls.mode === 'scale') {
+                updateMeshInfo(obj.name, obj.scale, 'scale');
+            }
+            else if (transformControls.mode === 'rotate') {
+                updateMeshInfo(obj.name, obj.rotation, 'rotation');
+            }
         }
     })
 
@@ -167,8 +175,14 @@ export function init(
     });
 
 
+    function setTransformControlsMode(mode) {
+        transformControls.setMode(mode);
+    }
+
+
     return {
         scene,
-        transformControls
+        transformControls,
+        setTransformControlsMode
     }
 }

@@ -860,6 +860,20 @@ three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互�
 
 
 
+## 实战：Three.js Editor（七）
+这节我们实现了旋转、缩放的编辑功能。
+
+原理就是 TransformControls 设置 translate、rotate、scale 三种 mode。
+
+我们加了三个按钮，点击的时候来切换 mode。
+
+并且在编辑的时候根据 mode 来分别把数据同步到 json 中。
+
+这样，位移、旋转、缩放的编辑功能就都完成了。
+
+
+
+
 ## 酷家乐装修编辑器：需求分析
 这节我们分析了下酷家乐装修编辑器的流程。
 
