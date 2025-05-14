@@ -846,6 +846,20 @@ three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互�
 
 
 
+## 实战：Three.js Editor（六）
+这节我们实现了位置的编辑。
+
+通过 TransformControls 来实现编辑功能。
+
+并且在 store 添加了一个方法，当 TransformControls 在 change 位置的时候，把它更新到 json 里。
+
+但他和 OrbitControls 的交互是冲突的，我们通过 TransformControls 的拖动状态的改变来启用禁用 OrbitControls 就好了。
+
+这样，我们就实现了物体位置的编辑。
+
+
+
+
 ## 酷家乐装修编辑器：需求分析
 这节我们分析了下酷家乐装修编辑器的流程。
 

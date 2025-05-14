@@ -25,7 +25,7 @@ function createBox() {
 
 function createCylinder() {
     const newId = Math.random().toString().slice(2, 8);
-    
+
     return {
         id: newId,
         type: 'Cylinder',
@@ -92,7 +92,7 @@ const useThreeStore = create((set, get) => {
                     }
                 }
             })
-        },        
+        },
 
         // 往这个 mesh 数组里添加 Mesh
         addMesh(type) {
@@ -109,13 +109,31 @@ const useThreeStore = create((set, get) => {
                     }
                 })
             }
-        
+
             if (type === 'Box') {
                 addItem(createBox);
             }
-            else if(type === 'Cylinder') {
+            else if (type === 'Cylinder') {
                 addItem(createCylinder);
             }
+        },
+
+        updateMeshPosition(name, position) {
+            set(state => {
+                return {
+                    data: {
+                        ...state.data,
+                        meshArr: state.data.meshArr.map(mesh => {
+                            // 根据 name 查找目标 mesh，然后更新 props.position
+                            if (mesh.name === name) {
+                                mesh.props.position = position;
+                            }
+
+                            return mesh;
+                        })
+                    }
+                }
+            })
         }
     }
 });

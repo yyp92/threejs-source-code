@@ -2,6 +2,9 @@ import * as THREE from 'three';
 import {
     OrbitControls
 } from 'three/addons/controls/OrbitControls.js';
+import {
+    TransformControls
+} from 'three/addons/controls/TransformControls.js';
 import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
 import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
@@ -9,7 +12,12 @@ import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
 import { MeshTypes } from '../../store';
 
-export function init(dom, data, onSelected) {
+export function init(
+    dom,
+    data,
+    onSelected,
+    updateMeshPosition
+) {
     const scene = new THREE.Scene();
 
     const axesHelper = new THREE.AxesHelper(500);
@@ -74,14 +82,42 @@ export function init(dom, data, onSelected) {
     composer.addPass(outlinePass);
 
     // 伽马校正
-    const gammaPass= new ShaderPass(GammaCorrectionShader);
-    composer.addPass(gammaPass);    
+    const gammaPass = new ShaderPass(GammaCorrectionShader);
+    composer.addPass(gammaPass);
+
+    // 把 OrbitControls 禁用掉，因为它的鼠标交互和 TransformControls 是冲突的
+    const orbitControls = new OrbitControls(camera, renderer.domElement);
+
+
+    // TransformControls
+    // 创建 TransformControls，把它的 helper 添加到 scene。
+    // 每次渲染循环调用下 update。
+    const transformControls = new TransformControls(camera, renderer.domElement);
+    const transformHelper = transformControls.getHelper();
+    scene.add(transformHelper);
+
+    // 把 OrbitControls 拿到上面来。
+    // 当 TransformControls 拖动的时候，把 OrbitControls 禁用就好了
+    // dragging-changed 是拖动状态的变化，如果 OrbitControls 在拖动，那就禁用 TransformControls，否则就启用。
+    transformControls.addEventListener('dragging-changed', function (event) {
+        orbitControls.enabled = !event.value;
+    });    
+
+    transformControls.addEventListener('change', () => {
+        const obj = transformControls.object;
+
+        if (obj) {
+            updateMeshPosition(obj.name, obj.position);
+        }
+    })
+
 
 
     function render(time) {
         // renderer.render(scene, camera);
         composer.render();
 
+        transformControls.update(time);
         requestAnimationFrame(render);
     }
 
@@ -99,8 +135,6 @@ export function init(dom, data, onSelected) {
         camera.updateProjectionMatrix();
     };
 
-    const controls = new OrbitControls(camera, renderer.domElement);
-
 
     // * 选中删除的功能
     renderer.domElement.addEventListener('click', (e) => {
@@ -110,21 +144,31 @@ export function init(dom, data, onSelected) {
         const rayCaster = new THREE.Raycaster();
         rayCaster.setFromCamera(new THREE.Vector2(x, y), camera);
 
-        const intersections = rayCaster.intersectObjects(scene.children);
+        // 把点击的范围精确了一下，只有 Box、Cylinder 开头的物体可以点击，其余的物体比如 GridHelper 之类的不处理点击事件
+        const objs = scene.children.filter(item => {
+            return item.name.startsWith('Box') || item.name.startsWith('Cylinder')
+        })
+
+        const intersections = rayCaster.intersectObjects(objs);
 
         if (intersections.length) {
             const obj = intersections[0].object;
             outlinePass.selectedObjects = [obj];
             onSelected(obj)
+
+            transformControls.attach(obj);
         }
         else {
             outlinePass.selectedObjects = [];
             onSelected(null)
+
+            transformControls.detach();
         }
     });
 
 
     return {
-        scene
+        scene,
+        transformControls
     }
 }

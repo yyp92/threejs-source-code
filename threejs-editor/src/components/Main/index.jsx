@@ -10,7 +10,8 @@ function Main() {
         addMesh,
         selectedObj,
         setSelectedObj,
-        removeMesh
+        removeMesh,
+        updateMeshPosition
     } = useThreeStore();
     const sceneRef = useRef();
 
@@ -21,7 +22,7 @@ function Main() {
 
     useEffect(() => {
         const dom = document.getElementById('threejs-container');
-        const { scene } = init(dom, data, onSelected);
+        const { scene } = init(dom, data, onSelected, updateMeshPosition);
 
         sceneRef.current = scene;
 
@@ -39,7 +40,8 @@ function Main() {
                 if (obj.isMesh) {
                     // 删掉 mesh 之前要把 mesh.geometry 占用的 cpu 资源 dispose 掉。
                     obj.geometry.dispose();
-                    obj.parent.remove(obj);
+
+                    // obj.parent.remove(obj)
                 }
             });
         }
