@@ -22,7 +22,6 @@ function Main() {
         setSelectedObj(obj)
     }
 
-
     useEffect(() => {
         const dom = document.getElementById('threejs-container');
         const {

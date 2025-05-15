@@ -3,13 +3,13 @@ import {
     OrbitControls
 } from 'three/addons/controls/OrbitControls.js';
 import {
+    EffectComposer,
+    GammaCorrectionShader,
+    OutlinePass,
+    RenderPass,
+    ShaderPass,
     TransformControls
-} from 'three/addons/controls/TransformControls.js';
-import { EffectComposer } from 'three/examples/jsm/postprocessing/EffectComposer.js';
-import { RenderPass } from 'three/examples/jsm/postprocessing/RenderPass.js';
-import { OutlinePass } from 'three/examples/jsm/postprocessing/OutlinePass.js';
-import { ShaderPass } from 'three/examples/jsm/postprocessing/ShaderPass.js';
-import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js';
+} from 'three/examples/jsm/Addons.js'
 import { MeshTypes } from '../../store';
 
 export function init(
@@ -65,6 +65,7 @@ export function init(
     camera.lookAt(0, 0, 0);
 
     const renderer = new THREE.WebGLRenderer({
+        // 抗锯齿
         antialias: true
     });
     renderer.setSize(width, height);
@@ -85,7 +86,6 @@ export function init(
     const gammaPass = new ShaderPass(GammaCorrectionShader);
     composer.addPass(gammaPass);
 
-    // 把 OrbitControls 禁用掉，因为它的鼠标交互和 TransformControls 是冲突的
     const orbitControls = new OrbitControls(camera, renderer.domElement);
 
 
@@ -96,6 +96,7 @@ export function init(
     const transformHelper = transformControls.getHelper();
     scene.add(transformHelper);
 
+    // 因为 OrbitControls的鼠标交互和 TransformControls 是冲突的，所以需要处理
     // 把 OrbitControls 拿到上面来。
     // 当 TransformControls 拖动的时候，把 OrbitControls 禁用就好了
     // dragging-changed 是拖动状态的变化，如果 OrbitControls 在拖动，那就禁用 TransformControls，否则就启用。
