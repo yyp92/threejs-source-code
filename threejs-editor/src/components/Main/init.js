@@ -180,10 +180,22 @@ export function init(
         transformControls.setMode(mode);
     }
 
+    function transformControlsAttachObj(obj) {
+        // 如果 obj 是空，就 detach
+        // 解决删除掉物体，transformControls还在
+        if (!obj) {
+            transformControls.detach()
+            return
+        }
+
+        transformControls.attach(obj);
+    }
+
 
     return {
         scene,
         transformControls,
-        setTransformControlsMode
+        setTransformControlsMode,
+        transformControlsAttachObj
     }
 }

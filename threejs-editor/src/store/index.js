@@ -1,3 +1,4 @@
+import { select } from "three/src/nodes/TSL.js";
 import { create } from "zustand";
 
 function createBox() {
@@ -93,11 +94,27 @@ const useThreeStore = create((set, get) => {
             ],
         },
 
+        // 场景
+        scene: null,
+        setScene(obj) {
+            set({
+                scene: obj
+            })
+        },
+
         // 选中的物体
         selectedObj: null,
         setSelectedObj(obj) {
             set({
                 selectedObj: obj
+            })
+        },
+
+        // 变化的时候，从 scene 种找到对应的物体来 attach 就好了
+        selectedObjName: null,
+        setSelectedObjName(name) {
+            set({
+                selectedObjName: name
             })
         },
 

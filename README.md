@@ -800,7 +800,9 @@ three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互�
 
 
 
-## 实战：Three.js Editor
+## 实战：Three.js Editor 
+`代码库：threejs-editor`
+
 这节我们梳理了下 Three.js Editor 的需求。
 
 我们会做这些功能：
@@ -870,6 +872,22 @@ three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互�
 并且在编辑的时候根据 mode 来分别把数据同步到 json 中。
 
 这样，位移、旋转、缩放的编辑功能就都完成了。
+
+
+
+
+## 实战：Three.js Editor（八）
+这节我们实现了场景树的展示，点击树选中对应的对象。
+
+首先我们把 scene 保存到了 store，在 Properties 组件里取出来遍历。
+
+因为只有一层，我们直接用 scene.chilren 拿到数据，用 antd 的 Tree 组件展示。
+
+之后添加了一个 selectedObjName 的 store 属性，点击树的 item 的时候，修改它。
+
+然后在 Main 组件里查找对应的 obj，让 TransformControls attach 上它就好了。
+
+这样，场景树就完成了。
 
 
 

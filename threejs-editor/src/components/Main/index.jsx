@@ -13,10 +13,13 @@ function Main() {
         selectedObj,
         setSelectedObj,
         removeMesh,
-        updateMeshInfo
+        updateMeshInfo,
+        setScene,
+        selectedObjName
     } = useThreeStore();
     const sceneRef = useRef();
     const transformControlsModeRef = useRef();
+    const transformControlsAttachObjRef = useRef();
 
     function onSelected(obj) {
         setSelectedObj(obj)
@@ -26,11 +29,15 @@ function Main() {
         const dom = document.getElementById('threejs-container');
         const {
             scene,
-            setTransformControlsMode
+            setTransformControlsMode,
+            transformControlsAttachObj
         } = init(dom, data, onSelected, updateMeshInfo);
 
         sceneRef.current = scene;
         transformControlsModeRef.current = setTransformControlsMode;
+        transformControlsAttachObjRef.current = transformControlsAttachObj
+
+        setScene(scene)
 
         return () => {
             dom.innerHTML = '';
@@ -39,18 +46,6 @@ function Main() {
 
     useEffect(() => {
         const scene = sceneRef.current;
-
-        if (scene) {
-            // 遍历 scene，删掉所有的 mesh
-            scene.traverse(obj => {
-                if (obj.isMesh) {
-                    // 删掉 mesh 之前要把 mesh.geometry 占用的 cpu 资源 dispose 掉。
-                    obj.geometry.dispose();
-
-                    // obj.parent.remove(obj)
-                }
-            });
-        }
 
         // 遍历 data.meshArr，根据类型来渲染 mesh。
         data.meshArr.forEach(item => {
@@ -120,6 +115,9 @@ function Main() {
                 scene.add(mesh);
             }
         })
+
+        // react 会浅层对比 scene 有没有变化，这里 clone 一下来触发更新。
+        setScene(scene.clone())
     }, [data]);
 
     // 按下 delete 键的时候，如果有选中的物体，就要把它删除
@@ -127,8 +125,10 @@ function Main() {
         function handleKeydown(e) {
             if (e.key === 'Backspace') {
                 if (selectedObj) {
-                    selectedObj?.parent.remove(selectedObj);
-                    setSelectedObj(null)
+                    // 在删除物体之前，先 detach 一下
+                    transformControlsAttachObjRef.current(null);
+
+                    sceneRef.current.remove(selectedObj)
                     removeMesh(selectedObj.name)
                 }
             }
@@ -140,6 +140,15 @@ function Main() {
             window.removeEventListener('keydown', handleKeydown);
         }
     }, [selectedObj]);
+
+    // 右边区域点击物体name，左边编辑器选中物体 
+    useEffect(() => {
+        if (selectedObjName) {
+            const obj = sceneRef.current.getObjectByName(selectedObjName)
+            setSelectedObj(obj)
+            transformControlsAttachObjRef.current(obj)
+        }
+    }, [selectedObjName])
 
 
     const setMode = (mode) => {
