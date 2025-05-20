@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react'
-import { Tree } from "antd";
+import { Tree, Segmented } from "antd";
+import MonacoEditor from '@monaco-editor/react'
 import { useThreeStore } from "../../store";
 import Info from './Info'
 
@@ -12,14 +13,9 @@ function Properties() {
     } = useThreeStore();
 
     const [treeData, setTreeData] = useState();
+     const [key, setKey] = useState('属性');
 
     useEffect(() => {
-        // if (scene?.traverse) {
-        //     scene.traverse((obj) => {
-        //         console.log('=====obj', obj)
-        //     })
-        // }
-
         if (scene?.children) {
             const tree = scene.children
                 .map((item) => {
@@ -63,19 +59,45 @@ function Properties() {
 
     return (
         <div className="Properties">
-            <Tree
-                treeData={treeData}
-                expandedKeys={['root']}
-                onSelect={handleSelect}
+            <Segmented
+                value={key}
+                onChange={setKey}
+                block
+                options={['属性', 'json']} 
             />
 
-            <Info />
+            {
+                key === '属性'
+                    ? (
+                        <div>
+                            <Tree
+                                treeData={treeData}
+                                expandedKeys={['root']}
+                                onSelect={handleSelect}
+                            />
 
+                            <Info />
+                        </div>
+                    )
+                    : null
+            }
 
-            {/* <div>selectedObj: {selectedObj?.name}</div> */}
-            <pre>
-                {JSON.stringify(data, null, 2)}
-            </pre>
+            {
+                key === 'json'
+                    ? (
+                        // <pre>
+                        //     {JSON.stringify(data, null, 2)}
+                        // </pre>
+
+                        <MonacoEditor
+                            height={'90%'}
+                            path='code.json'
+                            language='json'
+                            value={JSON.stringify(data, null, 2)}
+                        />
+                    )
+                    : null
+            }
         </div>
     )
 }

@@ -906,6 +906,18 @@ three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互�
 
 
 
+## 实战：Three.js Editor（十）
+这节我们优化了下细节的功能。
+
+首先，用 zustand 的 persist 中间件实现了持久化，这样刷新页面，编辑后的场景依然在，它会把 json 保存到 localStorage 里。
+
+然后用 antd 的 Segmented 组件来做了 tab，并且用 MonacoEditor 做了 json 的高亮。
+
+这样，react 结合 Three.js 的 3D 编辑器就完成了。
+
+
+
+
 ## 酷家乐装修编辑器：需求分析
 这节我们分析了下酷家乐装修编辑器的流程。
 
