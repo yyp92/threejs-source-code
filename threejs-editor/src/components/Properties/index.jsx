@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react'
 import { Tree } from "antd";
 import { useThreeStore } from "../../store";
+import Info from './Info'
 
 function Properties() {
     const {
@@ -62,16 +63,19 @@ function Properties() {
 
     return (
         <div className="Properties">
-            {/* <div>selectedObj: {selectedObj?.name}</div>
-            <pre>
-                {JSON.stringify(data, null, 2)}
-            </pre> */}
-
             <Tree
                 treeData={treeData}
                 expandedKeys={['root']}
                 onSelect={handleSelect}
             />
+
+            <Info />
+
+
+            {/* <div>selectedObj: {selectedObj?.name}</div> */}
+            <pre>
+                {JSON.stringify(data, null, 2)}
+            </pre>
         </div>
     )
 }
