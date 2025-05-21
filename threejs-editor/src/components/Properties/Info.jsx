@@ -22,7 +22,9 @@ const Info = () => {
         const colorStr = changeValues.color.toHexString();
 
         updateMaterial(selectedObj.name, {
-            color: colorStr
+            color: colorStr.length > 6
+                ? colorStr.slice(0, 7)
+                : colorStr
         });
     }
 
@@ -44,7 +46,10 @@ const Info = () => {
                             }}
                             onValuesChange={handleValuesChange}
                         >
-                            <Form.Item label="材质颜色" name="color">
+                            <Form.Item
+                                label="材质颜色"
+                                name="color"
+                            >
                                 <ColorPicker/>
                             </Form.Item>
                         </Form>

@@ -134,6 +134,7 @@ function Main() {
 
                     sceneRef.current.remove(selectedObj)
                     removeMesh(selectedObj.name)
+                    setSelectedObj(null)
                 }
             }
         }
