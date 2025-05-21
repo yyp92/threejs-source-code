@@ -963,3 +963,20 @@ three.js 在这个 canvas 元素渲染，react 则是渲染整个 dom 树，互�
 
 
 
+
+## 物理引擎 cannon：凸多面体生成各种形状
+`代码库：cannon-world`
+
+这节我们实现了凸多面体的形状定义。
+
+Cannon 定义了一些形状，比如 Box、Sphere、Cylinder 等，但总有一些不规则形状，这种就可以通过凸多面体 ConvexPolyhedron 来定义。
+
+它是通过定义顶点 vertices、面 faces 来实现的。
+
+从几何体 geometry 中取出顶点和顶点索引，设置到凸多面体就好了。
+
+这样，我们就能实现各种形状物体的真实物理现象。
+
+
+
+

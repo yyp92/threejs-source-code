@@ -1,3 +1,6 @@
+/**
+ * * 实现真实世界的物理现象
+ */
 import * as THREE from 'three';
 import * as CANNON from 'cannon-es'
 
